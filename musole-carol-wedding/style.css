@@ -1,0 +1,3146 @@
+/* =========================================================
+   M & C WEDDING
+   COMPLETE GUEST INTERFACE
+   ========================================================= */
+
+:root {
+
+    --green: #1c3b26;
+    --green-dark: #102519;
+    --green-light: #285336;
+
+    --gold: #d4af37;
+    --gold-light: #f1d77a;
+    --gold-dark: #9e7c19;
+
+    --cream: #faf7ef;
+    --paper: #fffdf7;
+
+    --text: #202820;
+    --muted: #70776f;
+
+    --white: #ffffff;
+
+    --shadow:
+        0 25px 70px rgba(0,0,0,.22);
+
+    --transition:
+        .4s cubic-bezier(.22,.61,.36,1);
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    color: var(--text);
+
+    background:
+        var(--cream);
+
+    overflow-x: hidden;
+}
+
+
+button,
+input {
+    font: inherit;
+}
+
+
+button {
+    cursor: pointer;
+}
+
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+.hidden {
+    display: none !important;
+}
+
+
+
+/* =========================================================
+   OPENING SCREEN
+   ========================================================= */
+
+.envelope-screen {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 100vh;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #285336 0%,
+            #1c3b26 45%,
+            #0d1e14 100%
+        );
+
+    transition:
+        opacity 1s ease,
+        visibility 1s ease;
+
+}
+
+
+.envelope-screen.opening-complete {
+
+    opacity: 0;
+
+    visibility: hidden;
+
+}
+
+
+.opening-glow {
+
+    position: absolute;
+
+    width: 650px;
+
+    height: 650px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(212,175,55,.16),
+            transparent 68%
+        );
+
+    pointer-events: none;
+
+}
+
+
+.opening-stars {
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: .35;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.8) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        80px 80px;
+
+    animation:
+        starsMove 18s linear infinite;
+
+}
+
+
+@keyframes starsMove {
+
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(80px);
+    }
+
+}
+
+
+
+/* =========================================================
+   OPENING BRAND
+   ========================================================= */
+
+.opening-brand {
+
+    position: absolute;
+
+    top: 6vh;
+
+    text-align: center;
+
+    color: white;
+
+    z-index: 20;
+
+}
+
+
+.opening-kicker {
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    font-weight: 600;
+
+    color:
+        var(--gold-light);
+
+}
+
+
+.opening-initials {
+
+    margin-top: 8px;
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    font-size: 32px;
+
+    letter-spacing: 8px;
+
+}
+
+
+.opening-initials span {
+    color: var(--gold);
+}
+
+
+.opening-subtitle {
+
+    margin-top: 3px;
+
+    font-family:
+        "Great Vibes",
+        cursive;
+
+    font-size: 25px;
+
+    color: rgba(255,255,255,.85);
+
+}
+
+
+
+/* =========================================================
+   ENVELOPE STAGE
+   ========================================================= */
+
+.envelope-stage {
+
+    position: relative;
+
+    width: min(88vw, 570px);
+
+    height: min(65vh, 520px);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    perspective: 1800px;
+
+}
+
+
+
+/* =========================================================
+   ENVELOPE
+   ========================================================= */
+
+.envelope {
+
+    position: relative;
+
+    width: min(86vw, 500px);
+
+    aspect-ratio: 1.5 / 1;
+
+    transform-style: preserve-3d;
+
+    perspective: 1800px;
+
+    overflow: visible;
+
+}
+
+
+
+/* BACK */
+
+.envelope-back {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f7f1df,
+            #e4d6b7
+        );
+
+    box-shadow:
+        0 35px 70px rgba(0,0,0,.35);
+
+}
+
+
+
+/* =========================================================
+   PAPER
+   ========================================================= */
+
+.invitation-paper {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 7%;
+
+    width: 76%;
+
+    height: 82%;
+
+    z-index: 3;
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: none;
+
+    transform:
+        translateX(-50%)
+        translateY(38%)
+        scale(.96);
+
+    transform-style: preserve-3d;
+
+    perspective: 1800px;
+
+}
+
+
+.paper-inner {
+
+    position: absolute;
+
+    inset: 0;
+
+    transform-style: preserve-3d;
+
+    transition:
+        transform 1.35s
+        cubic-bezier(.22,.61,.36,1);
+
+}
+
+
+.paper-face {
+
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    border-radius: 4px;
+
+    backface-visibility: hidden;
+
+    -webkit-backface-visibility: hidden;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.25);
+
+}
+
+
+.paper-blank-face {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fffef9,
+            #f5edda
+        );
+
+}
+
+
+.paper-content-face {
+
+    transform:
+        rotateY(180deg);
+
+    background:
+        linear-gradient(
+            135deg,
+            #fffdf7,
+            #f6ecd7
+        );
+
+}
+
+
+.invitation-paper.paper-flipped
+.paper-inner {
+
+    transform:
+        rotateY(180deg);
+
+}
+
+
+
+/* =========================================================
+   BLANK PAPER
+   ========================================================= */
+
+.blank-decoration {
+
+    width: 75%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 18px;
+
+}
+
+
+.blank-line {
+
+    height: 1px;
+
+    flex: 1;
+
+    background:
+        var(--gold);
+
+    opacity: .65;
+
+}
+
+
+.blank-monogram {
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    font-size: 23px;
+
+    letter-spacing: 4px;
+
+    color:
+        var(--green);
+
+}
+
+
+.blank-monogram span {
+    color: var(--gold);
+}
+
+
+
+/* =========================================================
+   WRITTEN INVITATION
+   ========================================================= */
+
+.paper-invitation-content {
+
+    position: absolute;
+
+    inset: 0;
+
+    padding:
+        clamp(15px, 3vw, 28px);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity .6s ease .15s;
+
+}
+
+
+.paper-invitation-content.visible {
+
+    opacity: 1;
+
+    visibility: visible;
+
+}
+
+
+.paper-top-ornament {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 8px;
+
+}
+
+
+.paper-top-ornament span {
+
+    width: 35px;
+
+    height: 1px;
+
+    background:
+        var(--gold);
+
+}
+
+
+.paper-top-ornament i {
+
+    color:
+        var(--gold);
+
+    font-size: 12px;
+
+}
+
+
+.paper-kicker {
+
+    font-size: 6px;
+
+    letter-spacing: 2px;
+
+    color:
+        var(--gold-dark);
+
+    font-weight: 700;
+
+}
+
+
+.paper-invitation-content h1 {
+
+    margin-top: 7px;
+
+    font-family:
+        "Great Vibes",
+        cursive;
+
+    font-size:
+        clamp(31px, 6vw, 47px);
+
+    line-height: 1;
+
+    color:
+        var(--green);
+
+}
+
+
+.paper-invitation-content h1 span {
+
+    color:
+        var(--gold);
+
+}
+
+
+.paper-rule {
+
+    width: 75px;
+
+    height: 1px;
+
+    margin: 10px auto;
+
+    background:
+        var(--gold);
+
+}
+
+
+.paper-dear {
+
+    font-family:
+        "Montserrat",
+        sans-serif;
+
+    font-size: 8px;
+
+    color:
+        var(--muted);
+
+}
+
+
+.paper-dear strong {
+
+    color:
+        var(--green);
+
+}
+
+
+.paper-message {
+
+    max-width: 330px;
+
+    margin-top: 9px;
+
+    font-size:
+        clamp(8px, 1.6vw, 11px);
+
+    line-height: 1.6;
+
+    color:
+        #555a53;
+
+}
+
+
+.paper-date {
+
+    display: flex;
+
+    flex-direction: column;
+
+    margin-top: 10px;
+
+    color:
+        var(--green);
+
+}
+
+
+.paper-date strong {
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
+
+}
+
+
+.paper-date span {
+
+    margin-top: 3px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+}
+
+
+.paper-location {
+
+    margin-top: 5px;
+
+    font-size: 7px;
+
+    color:
+        var(--muted);
+
+}
+
+
+.paper-location span {
+
+    color:
+        var(--gold);
+
+    padding: 0 3px;
+
+}
+
+
+.paper-scripture {
+
+    width: 90%;
+
+    margin-top: 9px;
+
+    padding: 7px;
+
+    border-top:
+        1px solid rgba(212,175,55,.35);
+
+    border-bottom:
+        1px solid rgba(212,175,55,.35);
+
+}
+
+
+.paper-scripture i {
+
+    font-size: 9px;
+
+    color:
+        var(--gold);
+
+}
+
+
+.paper-scripture p {
+
+    margin-top: 3px;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size: 8px;
+
+    line-height: 1.4;
+
+}
+
+
+.paper-scripture small {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color:
+        var(--gold-dark);
+
+    font-size: 6px;
+
+    font-weight: 700;
+
+}
+
+
+.paper-signature {
+
+    margin-top: 7px;
+
+    font-family:
+        "Great Vibes",
+        cursive;
+
+    font-size: 12px;
+
+    color:
+        var(--green);
+
+}
+
+
+.paper-signature strong {
+
+    display: block;
+
+    font-size: 16px;
+
+}
+
+
+
+/* =========================================================
+   ENVELOPE FRONT
+   ========================================================= */
+
+.envelope-pocket {
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: 0;
+
+    width: 100%;
+
+    height: 70%;
+
+    z-index: 6;
+
+    clip-path:
+        polygon(
+            0 0,
+            50% 55%,
+            100% 0,
+            100% 100%,
+            0 100%
+        );
+
+    background:
+        linear-gradient(
+            145deg,
+            #efe4ca,
+            #d7c39b
+        );
+
+    border-radius: 0 0 8px 8px;
+
+    pointer-events: none;
+
+}
+
+
+.envelope-front {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 7;
+
+    pointer-events: none;
+
+    clip-path:
+        polygon(
+            0 0,
+            50% 55%,
+            100% 0,
+            100% 100%,
+            0 100%
+        );
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.18),
+            rgba(0,0,0,.08)
+        );
+
+}
+
+
+
+/* =========================================================
+   FLAP
+   ========================================================= */
+
+.envelope-flap {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 55%;
+
+    z-index: 8;
+
+    transform-origin:
+        top center;
+
+    clip-path:
+        polygon(
+            0 0,
+            100% 0,
+            50% 100%
+        );
+
+    background:
+        linear-gradient(
+            145deg,
+            #f5ead0,
+            #d9c69d
+        );
+
+    transition:
+        transform 1.05s
+        cubic-bezier(.22,.61,.36,1);
+
+    backface-visibility: hidden;
+
+}
+
+
+.envelope.opening
+.envelope-flap {
+
+    transform:
+        rotateX(180deg);
+
+}
+
+
+
+/* =========================================================
+   WAX SEAL
+   ========================================================= */
+
+.wax-seal {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 51%;
+
+    transform:
+        translate(-50%,-50%);
+
+    z-index: 20;
+
+    width: 76px;
+
+    height: 76px;
+
+    border: 3px solid rgba(255,255,255,.22);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #f2d86e,
+            #d4af37 48%,
+            #8f6c14 100%
+        );
+
+    color:
+        #fff9d9;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.3),
+        inset 0 2px 4px rgba(255,255,255,.4);
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    transition:
+        transform .35s ease,
+        opacity .5s ease;
+
+}
+
+
+.wax-seal span {
+    font-size: 17px;
+}
+
+
+.wax-seal b {
+
+    font-size: 13px;
+
+    color:
+        #fff1a7;
+
+}
+
+
+.wax-seal:hover {
+
+    transform:
+        translate(-50%,-50%)
+        scale(1.08);
+
+}
+
+
+.wax-seal.opening {
+
+    animation:
+        sealOpen .65s ease forwards;
+
+}
+
+
+@keyframes sealOpen {
+
+    0% {
+        transform:
+            translate(-50%,-50%)
+            scale(1);
+    }
+
+    40% {
+        transform:
+            translate(-50%,-50%)
+            scale(1.16)
+            rotate(-4deg);
+    }
+
+    100% {
+        transform:
+            translate(-50%,-50%)
+            scale(.7)
+            rotate(5deg);
+
+        opacity: 0;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   PAPER PHYSICAL MOVEMENT
+   ========================================================= */
+
+.envelope.opening
+.invitation-paper {
+
+    z-index: 15;
+
+}
+
+
+.invitation-paper.paper-out {
+
+    transform:
+        translateX(-50%)
+        translateY(-76%)
+        scale(1.04);
+
+    transition:
+        transform 1.7s
+        cubic-bezier(.16,1,.3,1);
+
+}
+
+
+.invitation-paper.paper-flipped {
+
+    transform:
+        translateX(-50%)
+        translateY(-76%)
+        scale(1.04);
+
+}
+
+
+.invitation-paper.paper-flipped
+.paper-inner {
+
+    transform:
+        rotateY(180deg);
+
+}
+
+
+
+/* =========================================================
+   INSTRUCTION
+   ========================================================= */
+
+.opening-instruction {
+
+    position: absolute;
+
+    bottom: 7vh;
+
+    z-index: 30;
+
+    color:
+        rgba(255,255,255,.85);
+
+    font-size: 11px;
+
+    letter-spacing: 1.5px;
+
+    text-align: center;
+
+    transition:
+        opacity .5s ease;
+
+}
+
+
+
+/* =========================================================
+   CONTINUE BUTTON
+   ========================================================= */
+
+.continue-button {
+
+    position: absolute;
+
+    bottom: 3vh;
+
+    z-index: 50;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    border: 1px solid var(--gold);
+
+    border-radius: 30px;
+
+    padding:
+        12px 22px;
+
+    background:
+        rgba(212,175,55,.12);
+
+    color:
+        white;
+
+    font-size: 11px;
+
+    letter-spacing: .5px;
+
+    backdrop-filter:
+        blur(10px);
+
+    transition:
+        .3s ease;
+
+}
+
+
+.continue-button:hover {
+
+    background:
+        var(--gold);
+
+    color:
+        var(--green-dark);
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+
+/* =========================================================
+   MAIN INVITATION
+   ========================================================= */
+
+#invitation {
+
+    min-height: 100vh;
+
+    opacity: 0;
+
+    transition:
+        opacity 1s ease;
+
+}
+
+
+#invitation.visible {
+
+    opacity: 1;
+
+}
+
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.navbar {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    background:
+        rgba(16,37,25,.95);
+
+    backdrop-filter:
+        blur(15px);
+
+    border-bottom:
+        1px solid rgba(212,175,55,.2);
+
+}
+
+
+.nav-inner {
+
+    width:
+        min(1180px, 92%);
+
+    margin: auto;
+
+    min-height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+.nav-logo {
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    color:
+        white;
+
+    font-size: 19px;
+
+    letter-spacing: 3px;
+
+}
+
+
+.nav-logo span {
+    color: var(--gold);
+}
+
+
+.nav-links {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 24px;
+
+}
+
+
+.nav-links a {
+
+    color:
+        rgba(255,255,255,.8);
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+}
+
+
+.nav-links a:hover {
+    color: var(--gold);
+}
+
+
+.music-toggle {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    border:
+        1px solid rgba(212,175,55,.45);
+
+    border-radius: 20px;
+
+    padding:
+        8px 12px;
+
+    background:
+        transparent;
+
+    color:
+        var(--gold-light);
+
+    font-size: 10px;
+
+}
+
+
+
+/* =========================================================
+   GENERAL SECTIONS
+   ========================================================= */
+
+.container {
+
+    width:
+        min(1100px, 92%);
+
+    margin:
+        0 auto;
+
+}
+
+
+.section-heading {
+
+    text-align: center;
+
+    margin-bottom: 45px;
+
+}
+
+
+.section-heading > span {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    color:
+        var(--gold-dark);
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    font-weight: 700;
+
+}
+
+
+.section-heading h2 {
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    color:
+        var(--green);
+
+    font-size:
+        clamp(25px,4vw,40px);
+
+}
+
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero-section {
+
+    position: relative;
+
+    min-height: 88vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    color: white;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #355e42,
+            #13291b
+        );
+
+}
+
+
+.hero-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent,
+            rgba(0,0,0,.45)
+        );
+
+}
+
+
+.hero-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 850px;
+
+    padding: 40px 20px;
+
+}
+
+
+.hero-kicker {
+
+    color:
+        var(--gold-light);
+
+    letter-spacing: 4px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+}
+
+
+.hero-title {
+
+    margin-top: 15px;
+
+    font-family:
+        "Great Vibes",
+        cursive;
+
+    font-size:
+        clamp(65px,11vw,125px);
+
+    font-weight: 400;
+
+    line-height: .95;
+
+}
+
+
+.hero-title span {
+
+    color:
+        var(--gold);
+
+}
+
+
+.hero-divider {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 25px 0;
+
+}
+
+
+.hero-divider span {
+
+    width: 70px;
+
+    height: 1px;
+
+    background:
+        var(--gold);
+
+}
+
+
+.hero-divider i {
+    color: var(--gold);
+}
+
+
+.hero-subtitle {
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    letter-spacing: 2px;
+
+    font-size: 13px;
+
+}
+
+
+.hero-text {
+
+    margin-top: 12px;
+
+    color:
+        rgba(255,255,255,.75);
+
+    font-size: 13px;
+
+}
+
+
+.hero-date {
+
+    margin-top: 30px;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.hero-date span {
+
+    color:
+        var(--gold-light);
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+}
+
+
+.hero-date strong {
+
+    margin-top: 6px;
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    font-size: 20px;
+
+}
+
+
+.hero-location {
+
+    margin-top: 18px;
+
+    font-size: 12px;
+
+    color:
+        rgba(255,255,255,.7);
+
+}
+
+
+
+/* =========================================================
+   COUNTDOWN
+   ========================================================= */
+
+.countdown-section {
+
+    padding:
+        80px 0;
+
+    background:
+        var(--cream);
+
+}
+
+
+.countdown-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 15px;
+
+}
+
+
+.countdown-box {
+
+    padding:
+        30px 15px;
+
+    text-align: center;
+
+    border:
+        1px solid rgba(212,175,55,.3);
+
+    background:
+        white;
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.05);
+
+}
+
+
+.countdown-box strong {
+
+    display: block;
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    color:
+        var(--green);
+
+    font-size: 35px;
+
+}
+
+
+.countdown-box span {
+
+    color:
+        var(--muted);
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+}
+
+
+
+/* =========================================================
+   FAITH
+   ========================================================= */
+
+.faith-section {
+
+    padding:
+        90px 0;
+
+    background:
+        #f0eadc;
+
+}
+
+
+.scripture-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 20px;
+
+}
+
+
+.scripture-card {
+
+    text-align: center;
+
+    padding: 35px 25px;
+
+    background:
+        rgba(255,255,255,.72);
+
+    border:
+        1px solid rgba(212,175,55,.25);
+
+}
+
+
+.scripture-icon {
+
+    color:
+        var(--gold-dark);
+
+    font-size: 25px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.scripture-reference {
+
+    display: block;
+
+    margin-bottom: 15px;
+
+    color:
+        var(--green);
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+}
+
+
+.scripture-card p {
+
+    color:
+        #5e655d;
+
+    font-family:
+        Georgia,
+        serif;
+
+    line-height: 1.7;
+
+    font-size: 14px;
+
+}
+
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+.message-section {
+
+    padding:
+        90px 0;
+
+    background:
+        white;
+
+}
+
+
+.message-card {
+
+    max-width: 760px;
+
+    margin: auto;
+
+    text-align: center;
+
+}
+
+
+.message-icon {
+
+    color:
+        var(--gold);
+
+    font-size: 25px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.message-card > span {
+
+    color:
+        var(--gold-dark);
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    font-weight: 700;
+
+}
+
+
+.message-card h2 {
+
+    margin-top: 12px;
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    color:
+        var(--green);
+
+}
+
+
+.message-card p {
+
+    margin-top: 18px;
+
+    color:
+        var(--muted);
+
+    line-height: 1.9;
+
+}
+
+
+.signature {
+
+    margin-top: 25px;
+
+    font-family:
+        "Great Vibes",
+        cursive;
+
+    font-size: 30px;
+
+    color:
+        var(--green);
+
+}
+
+
+
+/* =========================================================
+   DETAILS
+   ========================================================= */
+
+.details-section {
+
+    padding:
+        90px 0;
+
+    background:
+        var(--cream);
+
+}
+
+
+.details-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 20px;
+
+}
+
+
+.detail-card {
+
+    padding:
+        35px 25px;
+
+    text-align: center;
+
+    background:
+        white;
+
+    border:
+        1px solid rgba(212,175,55,.22);
+
+}
+
+
+.detail-icon {
+
+    color:
+        var(--gold-dark);
+
+    font-size: 28px;
+
+    margin-bottom: 18px;
+
+}
+
+
+.detail-card h3 {
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    color:
+        var(--green);
+
+    font-size: 17px;
+
+}
+
+
+.detail-card p {
+
+    margin-top: 12px;
+
+    color:
+        var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+.detail-card strong {
+
+    display: block;
+
+    margin-top: 8px;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+}
+
+
+.detail-time {
+
+    display: block;
+
+    margin-top: 15px;
+
+    color:
+        var(--gold-dark);
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    font-weight: 700;
+
+}
+
+
+.map-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-top: 20px;
+
+    padding:
+        9px 15px;
+
+    border-radius: 20px;
+
+    background:
+        var(--green);
+
+    color:
+        white;
+
+    font-size: 10px;
+
+}
+
+
+
+/* =========================================================
+   PERSONAL
+   ========================================================= */
+
+.personal-section {
+
+    padding:
+        90px 0;
+
+    background:
+        var(--green);
+
+    color:
+        white;
+
+}
+
+
+.personal-card {
+
+    max-width: 720px;
+
+    margin: auto;
+
+    text-align: center;
+
+}
+
+
+.personal-card > span {
+
+    color:
+        var(--gold-light);
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+}
+
+
+.personal-card h2 {
+
+    margin-top: 15px;
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    font-weight: 400;
+
+}
+
+
+.personal-card h2 strong {
+
+    color:
+        var(--gold-light);
+
+}
+
+
+.personal-card p {
+
+    margin-top: 20px;
+
+    color:
+        rgba(255,255,255,.72);
+
+    line-height: 1.8;
+
+}
+
+
+
+/* =========================================================
+   RSVP
+   ========================================================= */
+
+.rsvp-section {
+
+    padding:
+        90px 0;
+
+    background:
+        #f0eadc;
+
+}
+
+
+.rsvp-card {
+
+    max-width: 650px;
+
+    margin: auto;
+
+    padding:
+        35px;
+
+    background:
+        white;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.08);
+
+}
+
+
+.form-group {
+
+    margin-bottom: 20px;
+
+}
+
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color:
+        var(--green);
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+}
+
+
+.form-group input {
+
+    width: 100%;
+
+    padding:
+        13px 14px;
+
+    border:
+        1px solid #ddd6c7;
+
+    border-radius: 5px;
+
+    outline: none;
+
+}
+
+
+.form-group input:focus {
+
+    border-color:
+        var(--gold);
+
+}
+
+
+.guest-type-options {
+
+    display: flex;
+
+    gap: 12px;
+
+}
+
+
+.guest-type-options label {
+
+    flex: 1;
+
+    cursor: pointer;
+
+}
+
+
+.guest-type-options input {
+
+    display: none;
+
+}
+
+
+.guest-type-options span {
+
+    display: block;
+
+    padding: 12px;
+
+    text-align: center;
+
+    border:
+        1px solid #ddd6c7;
+
+    border-radius: 5px;
+
+    color:
+        var(--muted);
+
+}
+
+
+.guest-type-options input:checked + span {
+
+    border-color:
+        var(--gold);
+
+    background:
+        rgba(212,175,55,.1);
+
+    color:
+        var(--green);
+
+}
+
+
+.rsvp-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+
+    margin-top: 25px;
+
+}
+
+
+.rsvp-actions button {
+
+    border: none;
+
+    padding:
+        14px;
+
+    border-radius: 5px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+}
+
+
+.rsvp-accept {
+
+    background:
+        var(--green);
+
+    color:
+        white;
+
+}
+
+
+.rsvp-regret {
+
+    background:
+        #eee9de;
+
+    color:
+        #5d625d;
+
+}
+
+
+.rsvp-actions button.active {
+
+    box-shadow:
+        0 0 0 3px
+        rgba(212,175,55,.35);
+
+}
+
+
+.rsvp-message {
+
+    margin-top: 20px;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+}
+
+
+
+/* =========================================================
+   QR
+   ========================================================= */
+
+.qr-section {
+
+    padding:
+        90px 0;
+
+    background:
+        white;
+
+}
+
+
+.qr-card {
+
+    max-width: 550px;
+
+    margin: auto;
+
+    text-align: center;
+
+}
+
+
+.qr-card > p {
+
+    color:
+        var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.7;
+
+}
+
+
+.qr-container {
+
+    width: 240px;
+
+    min-height: 240px;
+
+    margin:
+        25px auto;
+
+    padding: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: white;
+
+    border:
+        1px solid #ddd;
+
+}
+
+
+.qr-guest-info {
+
+    margin-bottom: 20px;
+
+    color:
+        var(--green);
+
+    font-weight: 700;
+
+    font-size: 12px;
+
+}
+
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.gold-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    border: none;
+
+    border-radius: 25px;
+
+    padding:
+        12px 20px;
+
+    background:
+        var(--gold);
+
+    color:
+        var(--green-dark);
+
+    font-weight: 700;
+
+    font-size: 11px;
+
+}
+
+
+
+/* =========================================================
+   GIFTS
+   ========================================================= */
+
+.gifts-section {
+
+    padding:
+        90px 0;
+
+    background:
+        var(--cream);
+
+}
+
+
+.gift-card {
+
+    max-width: 700px;
+
+    margin: auto;
+
+    padding:
+        40px;
+
+    text-align: center;
+
+    background:
+        white;
+
+    border:
+        1px solid rgba(212,175,55,.25);
+
+}
+
+
+.gift-icon {
+
+    color:
+        var(--gold);
+
+    font-size: 32px;
+
+}
+
+
+.gift-card > p {
+
+    margin-top: 20px;
+
+    color:
+        var(--muted);
+
+    line-height: 1.7;
+
+    font-size: 13px;
+
+}
+
+
+.gift-values {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 20px;
+
+    margin-top: 25px;
+
+}
+
+
+.gift-values div {
+
+    padding:
+        20px;
+
+    background:
+        #f7f2e8;
+
+}
+
+
+.gift-values strong {
+
+    display: block;
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    font-size: 28px;
+
+    color:
+        var(--green);
+
+}
+
+
+.gift-values span {
+
+    font-size: 10px;
+
+    color:
+        var(--muted);
+
+}
+
+
+.gift-recommendation {
+
+    color:
+        var(--green) !important;
+
+    font-weight: 700;
+
+}
+
+
+.mobile-money {
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 20px;
+
+}
+
+
+.mobile-money div {
+
+    padding:
+        8px 12px;
+
+    border:
+        1px solid #ddd6c7;
+
+    border-radius: 20px;
+
+    font-size: 9px;
+
+    color:
+        var(--green);
+
+}
+
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+
+    padding:
+        70px 20px;
+
+    text-align: center;
+
+    background:
+        var(--green-dark);
+
+    color:
+        white;
+
+}
+
+
+.footer-monogram {
+
+    font-family:
+        "Cinzel",
+        serif;
+
+    font-size: 28px;
+
+    letter-spacing: 5px;
+
+}
+
+
+.footer-monogram span {
+
+    color:
+        var(--gold);
+
+}
+
+
+.footer h2 {
+
+    margin-top: 12px;
+
+    font-family:
+        "Great Vibes",
+        cursive;
+
+    font-size: 36px;
+
+    font-weight: 400;
+
+}
+
+
+.footer > p {
+
+    margin-top: 8px;
+
+    color:
+        rgba(255,255,255,.65);
+
+    font-size: 11px;
+
+}
+
+
+.footer-verse {
+
+    max-width: 500px;
+
+    margin:
+        25px auto 0;
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid rgba(212,175,55,.2);
+
+    color:
+        rgba(255,255,255,.7);
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+}
+
+
+.footer-verse span {
+
+    display: block;
+
+    margin-top: 7px;
+
+    color:
+        var(--gold-light);
+
+}
+
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .nav-links {
+        display: none;
+    }
+
+
+    .countdown-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+
+    .scripture-grid,
+    .details-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .envelope-stage {
+
+        width: 96vw;
+
+        height: 55vh;
+
+    }
+
+
+    .envelope {
+
+        width:
+            min(90vw, 470px);
+
+    }
+
+
+    .wax-seal {
+
+        width: 68px;
+
+        height: 68px;
+
+    }
+
+
+    .paper-invitation-content {
+
+        padding: 12px;
+
+    }
+
+
+    .paper-message {
+
+        font-size: 7px;
+
+    }
+
+
+    .paper-scripture p {
+
+        font-size: 7px;
+
+    }
+
+
+    .rsvp-actions {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .gift-card {
+
+        padding:
+            25px 18px;
+
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .opening-brand {
+        top: 4vh;
+    }
+
+
+    .opening-initials {
+        font-size: 27px;
+    }
+
+
+    .opening-subtitle {
+        font-size: 21px;
+    }
+
+
+    .envelope-stage {
+
+        height: 50vh;
+
+    }
+
+
+    .paper-kicker {
+
+        font-size: 5px;
+
+    }
+
+
+    .paper-invitation-content h1 {
+
+        font-size: 30px;
+
+    }
+
+
+    .paper-message {
+
+        max-width: 220px;
+
+        font-size: 6px;
+
+    }
+
+
+    .paper-date strong {
+
+        font-size: 6px;
+
+    }
+
+
+    .paper-date span {
+
+        font-size: 8px;
+
+    }
+
+
+    .paper-location {
+
+        font-size: 6px;
+
+    }
+
+
+    .paper-scripture {
+
+        margin-top: 6px;
+
+        padding: 5px;
+
+    }
+
+
+    .paper-scripture p {
+
+        font-size: 6px;
+
+    }
+
+
+    .paper-signature {
+
+        font-size: 9px;
+
+    }
+
+
+    .paper-signature strong {
+
+        font-size: 13px;
+
+    }
+
+
+    .continue-button {
+
+        padding:
+            10px 17px;
+
+        font-size: 9px;
+
+    }
+
+}/* =========================================================
+   M & C WEDDING
+   FINAL ENVELOPE OVERRIDE
+   ========================================================= */
+
+#weddingEnvelope {
+    overflow: visible !important;
+    perspective: 1600px;
+}
+
+#invitationPaper {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 7% !important;
+
+    width: 76% !important;
+    height: 82% !important;
+
+    z-index: 3 !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    pointer-events: none;
+
+    perspective: 1600px;
+
+    transform:
+        translateX(-50%)
+        translateY(38%)
+        scale(.96) !important;
+
+    transform-style: preserve-3d;
+
+    transition:
+        transform 1.8s cubic-bezier(.22,.61,.36,1);
+}
+
+
+#invitationPaper .paper-inner {
+    position: absolute !important;
+
+    inset: 0 !important;
+
+    width: 100%;
+    height: 100%;
+
+    transform-style: preserve-3d;
+
+    transition:
+        transform 1.35s cubic-bezier(.22,.61,.36,1);
+}
+
+
+#invitationPaper .paper-face {
+    position: absolute !important;
+
+    inset: 0 !important;
+
+    width: 100%;
+    height: 100%;
+
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+
+    transform-style: preserve-3d;
+
+    overflow: hidden;
+}
+
+
+#invitationPaper .paper-blank-face {
+
+    transform:
+        rotateY(0deg) !important;
+
+    z-index: 2 !important;
+}
+
+
+#invitationPaper .paper-content-face {
+
+    transform:
+        rotateY(180deg) !important;
+
+    z-index: 1 !important;
+}
+
+
+#paperInvitationContent {
+
+    opacity: 0 !important;
+
+    visibility: hidden !important;
+
+    transform:
+        translateY(18px)
+        scale(.97) !important;
+
+    transition:
+        opacity .7s ease,
+        transform .7s ease,
+        visibility 0s linear .7s !important;
+}
+
+
+#paperInvitationContent.visible {
+
+    opacity: 1 !important;
+
+    visibility: visible !important;
+
+    transform:
+        translateY(0)
+        scale(1) !important;
+
+    transition:
+        opacity .7s ease,
+        transform .7s ease,
+        visibility 0s !important;
+}
+
+
+/* =========================================================
+   PAPER RISING
+   ========================================================= */
+
+#weddingEnvelope.opening #invitationPaper {
+
+    z-index: 50 !important;
+}
+
+
+/* =========================================================
+   PAPER FLIP
+   ========================================================= */
+
+#weddingEnvelope.paper-flipping {
+
+    z-index: 60 !important;
+}
+
+
+#weddingEnvelope.paper-flipping
+#invitationPaper {
+
+    z-index: 70 !important;
+}
+
+
+/* =========================================================
+   ENVELOPE FLAP
+   ========================================================= */
+
+#weddingEnvelope.opening
+.envelope-flap {
+
+    transform:
+        rotateX(180deg) !important;
+
+    z-index: 2 !important;
+}
+
+
+/* =========================================================
+   WAX SEAL
+   ========================================================= */
+
+#waxSealButton {
+
+    z-index: 100 !important;
+
+    cursor: pointer;
+
+    transition:
+        transform .35s ease,
+        opacity .35s ease,
+        box-shadow .35s ease;
+}
+
+
+#waxSealButton.opening {
+
+    transform:
+        scale(.82)
+        rotate(-8deg);
+
+    opacity: .15;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   CONTINUE
+   ========================================================= */
+
+#continueInvitationBtn.hidden {
+
+    display: none !important;
+}
+
+
+#continueInvitationBtn:not(.hidden) {
+
+    display: inline-flex !important;
+
+    visibility: visible !important;
+
+    opacity: 1 !important;
+
+    pointer-events: auto !important;
+
+    position: relative;
+
+    z-index: 500 !important;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   MAIN INVITATION
+   ========================================================= */
+
+#invitation.hidden {
+
+    display: none !important;
+}
+
+
+#invitation.visible {
+
+    display: block !important;
+
+    visibility: visible !important;
+
+    opacity: 1 !important;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    #invitationPaper {
+
+        width: 84% !important;
+
+        height: 78% !important;
+
+        bottom: 8% !important;
+
+    }
+
+    #paperInvitationContent {
+
+        padding:
+            12px !important;
+
+        font-size:
+            11px;
+
+    }
+
+    .paper-invitation-content h1 {
+
+        font-size:
+            24px !important;
+
+    }
+
+}
+
+
+@media (max-height: 700px) {
+
+    #invitationPaper {
+
+        height: 80% !important;
+
+        width: 72% !important;
+
+    }
+
+}

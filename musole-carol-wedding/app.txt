@@ -1,0 +1,387 @@
+/* =========================================================
+   MUSOLE & CAROL WEDDING
+   GUEST APPLICATION
+========================================================= */
+
+
+/* =========================================================
+   OPEN ENVELOPE
+========================================================= */
+
+const envelopeScreen = document.getElementById("envelopeScreen");
+const invitation = document.getElementById("invitation");
+
+const openInvitationBtn =
+    document.getElementById("openInvitationBtn");
+
+const skipEnvelopeBtn =
+    document.getElementById("skipEnvelopeBtn");
+
+const envelope =
+    document.querySelector(".envelope");
+
+
+function showInvitation() {
+
+    envelope.classList.add("open");
+
+    setTimeout(() => {
+
+        envelopeScreen.style.opacity = "0";
+
+        setTimeout(() => {
+
+            envelopeScreen.style.display = "none";
+            invitation.classList.remove("hidden");
+
+            window.scrollTo({
+                top: 0,
+                behavior: "instant"
+            });
+
+        }, 600);
+
+    }, 900);
+}
+
+
+openInvitationBtn.addEventListener(
+    "click",
+    showInvitation
+);
+
+
+skipEnvelopeBtn.addEventListener(
+    "click",
+    () => {
+
+        envelopeScreen.style.display = "none";
+        invitation.classList.remove("hidden");
+
+    }
+);
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+const weddingDate =
+    new Date("December 19, 2026 10:00:00").getTime();
+
+
+function updateCountdown() {
+
+    const now = new Date().getTime();
+
+    const distance =
+        weddingDate - now;
+
+
+    if (distance <= 0) {
+
+        document.getElementById("days").textContent = "0";
+        document.getElementById("hours").textContent = "0";
+        document.getElementById("minutes").textContent = "0";
+        document.getElementById("seconds").textContent = "0";
+
+        return;
+    }
+
+
+    const days =
+        Math.floor(
+            distance / (1000 * 60 * 60 * 24)
+        );
+
+    const hours =
+        Math.floor(
+            (distance % (1000 * 60 * 60 * 24))
+            / (1000 * 60 * 60)
+        );
+
+    const minutes =
+        Math.floor(
+            (distance % (1000 * 60 * 60))
+            / (1000 * 60)
+        );
+
+    const seconds =
+        Math.floor(
+            (distance % (1000 * 60))
+            / 1000
+        );
+
+
+    document.getElementById("days").textContent =
+        days;
+
+    document.getElementById("hours").textContent =
+        hours;
+
+    document.getElementById("minutes").textContent =
+        minutes;
+
+    document.getElementById("seconds").textContent =
+        seconds;
+}
+
+
+updateCountdown();
+
+setInterval(
+    updateCountdown,
+    1000
+);
+
+
+/* =========================================================
+   RSVP
+========================================================= */
+
+const acceptBtn =
+    document.getElementById("acceptBtn");
+
+const regretBtn =
+    document.getElementById("regretBtn");
+
+const rsvpMessage =
+    document.getElementById("rsvpMessage");
+
+
+function getGuestType() {
+
+    const selected =
+        document.querySelector(
+            'input[name="guestType"]:checked'
+        );
+
+    return selected
+        ? selected.value
+        : "single";
+}
+
+
+async function submitRSVP(status) {
+
+    const name =
+        document.getElementById("guestName")
+        .value
+        .trim();
+
+    const phone =
+        document.getElementById("guestPhone")
+        .value
+        .trim();
+
+    const guestType =
+        getGuestType();
+
+
+    if (!name) {
+
+        rsvpMessage.textContent =
+            "Please enter your full name.";
+
+        rsvpMessage.style.color = "#a33";
+
+        return;
+    }
+
+
+    if (!phone) {
+
+        rsvpMessage.textContent =
+            "Please enter your phone number.";
+
+        rsvpMessage.style.color = "#a33";
+
+        return;
+    }
+
+
+    rsvpMessage.textContent =
+        "Submitting your RSVP...";
+
+    rsvpMessage.style.color =
+        "#1c3b26";
+
+
+    try {
+
+        const qrToken =
+            crypto.randomUUID();
+
+
+        const { data, error } =
+            await supabaseClient
+                .from("guests")
+                .insert([
+                    {
+                        full_name: name,
+                        phone: phone,
+                        guest_type: guestType,
+                        rsvp_status: status,
+                        approval_status: "pending",
+                        invitation_sent: false,
+                        invitation_received: false,
+                        qr_token: qrToken
+                    }
+                ])
+                .select()
+                .single();
+
+
+        if (error) {
+
+            console.error(error);
+
+            rsvpMessage.textContent =
+                "Sorry, your RSVP could not be submitted. Please try again.";
+
+            rsvpMessage.style.color = "#a33";
+
+            return;
+        }
+
+
+        if (status === "accepted") {
+
+            rsvpMessage.textContent =
+                "Thank you! Your attendance has been recorded.";
+
+        } else {
+
+            rsvpMessage.textContent =
+                "Thank you for letting us know. Your regret has been recorded.";
+
+        }
+
+
+        rsvpMessage.style.color =
+            "#1c3b26";
+
+
+        generateQRCode(qrToken);
+
+    } catch (error) {
+
+        console.error(error);
+
+        rsvpMessage.textContent =
+            "Something went wrong. Please try again.";
+
+        rsvpMessage.style.color =
+            "#a33";
+    }
+}
+
+
+acceptBtn.addEventListener(
+    "click",
+    () => submitRSVP("accepted")
+);
+
+
+regretBtn.addEventListener(
+    "click",
+    () => submitRSVP("regretted")
+);
+
+
+/* =========================================================
+   GENERATE QR CODE
+========================================================= */
+
+function generateQRCode(token) {
+
+    const container =
+        document.getElementById("qrContainer");
+
+    const downloadButton =
+        document.getElementById("downloadQrBtn");
+
+
+    container.innerHTML = "";
+
+
+    new QRCode(
+        container,
+        {
+            text: token,
+            width: 190,
+            height: 190,
+            correctLevel:
+                QRCode.CorrectLevel.H
+        }
+    );
+
+
+    downloadButton.classList.remove(
+        "hidden"
+    );
+
+
+    downloadButton.onclick =
+        function () {
+
+            const image =
+                container.querySelector("img");
+
+
+            if (!image) {
+
+                alert(
+                    "Please wait for the QR code to finish generating."
+                );
+
+                return;
+            }
+
+
+            const link =
+                document.createElement("a");
+
+            link.href =
+                image.src;
+
+            link.download =
+                "Musole-Carol-Wedding-QR-Pass.png";
+
+            link.click();
+
+        };
+}
+
+
+/* =========================================================
+   SMOOTH NAVIGATION
+========================================================= */
+
+document.querySelectorAll(
+    '.nav-links a'
+).forEach(link => {
+
+    link.addEventListener(
+        "click",
+        function (event) {
+
+            event.preventDefault();
+
+            const target =
+                document.querySelector(
+                    this.getAttribute("href")
+                );
+
+            if (target) {
+
+                target.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+            }
+
+        }
+    );
+
+});
